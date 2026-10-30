@@ -1,1 +1,41 @@
-probe
+# Copy this file to .github/workflows/pages.yml (one time) to deploy to GitHub Pages.
+# Quick way: https://github.com/WEBWORKSA1/hard-money/new/main?filename=.github/workflows/pages.yml
+# It enables Pages, builds the site with node tools/build.mjs, renders og.png and deploys on every push to main.
+name: Deploy Hard.Money to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Pages (enables Pages on first run)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build site (generates all HTML, sitemap, robots, ads.txt, CNAME)
+        run: node tools/build.mjs
+      - name: Render social preview image (og.png from og.svg)
+        run: |
+          npx -y playwright@1.47.0 install --with-deps chromium
+          npx -y playwright@1.47.0 screenshot --viewport-size=1200,630 "file://$PWD/assets/img/og.svg" assets/img/og.png
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
