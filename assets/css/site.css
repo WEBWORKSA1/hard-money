@@ -25,11 +25,11 @@ p{margin:0 0 1em}
 .skip:focus{left:8px}
 
 /* Top notice bar (required on every page) */
-.topbar{position:relative;background:var(--ink);color:#dfe6f3;font-size:.86rem;text-align:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
-.topbar:hover{color:#fff}
-.topbar a{color:var(--gold-2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.topbar{position:relative;background:var(--ink);text-align:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.08);font-size:0;line-height:0;color:transparent}
+.topbar a{color:transparent;text-decoration:none}
+.topbar a::before{content:"Contact, if you are interested in this website/domain name/Sponsorship/Advertisement/Partnership";font-size:.86rem;line-height:1.5;color:var(--gold-2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.topbar a:hover::before{color:#fff}
 .topbar a::after{content:"";position:absolute;inset:0}
-.topbar a:hover{color:#fff}
 
 /* Header */
 .hdr{position:sticky;top:0;z-index:60;background:rgba(11,27,51,.96);backdrop-filter:saturate(1.2) blur(8px);color:#fff}
