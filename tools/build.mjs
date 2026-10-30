@@ -119,7 +119,7 @@ const out = [];
 export function write(url, html) {
   const file = url.endsWith('/') ? path.join(ROOT, url, 'index.html') : path.join(ROOT, url);
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, html);
+  fs.writeFileSync(file, html.replace(/\n[ \t]+/g, '\n').replace(/\n{2,}/g, '\n'));
   if (url.endsWith('/') || url.endsWith('.html')) out.push(url);
 }
 
