@@ -4,6 +4,16 @@ Static, dependency-free website for **hard.money**: hard money / private real-es
 
 Live: https://hard.money (GitHub Pages, `main` branch, deployed by `.github/workflows/pages.yml`).
 
+## ▶ Activate deployment (one time, ~1 minute)
+
+GitHub only lets a repository *owner* add workflow files, so the deploy workflow is parked at `tools/pages-workflow.yml`. To go live:
+
+1. Open **https://github.com/WEBWORKSA1/hard-money/new/main?filename=.github/workflows/pages.yml**
+2. Paste the contents of [`tools/pages-workflow.yml`](tools/pages-workflow.yml) and click **Commit changes**.
+3. Watch the **Actions** tab — the first run enables GitHub Pages, builds all 56 pages and deploys. Site appears at `https://webworksa1.github.io/hard-money/` until the custom domain below is pointed, then at `https://hard.money`.
+
+Every later push to `main` redeploys automatically.
+
 ## Structure
 
 ```
@@ -11,16 +21,18 @@ Live: https://hard.money (GitHub Pages, `main` branch, deployed by `.github/work
 /assets/js/main.js     nav, forms, multi-step funnel, directory filter, calculators, lazy video
 /tools/build.mjs       static site generator (Node ≥ 18, no npm deps)
 /tools/content/*.mjs   all content & data: pages, loans, articles, lenders, states, glossary, videos, faqs
-ads.txt · robots.txt · sitemap.xml · CNAME · .nojekyll · 404.html
+/tools/pages-workflow.yml  GitHub Pages workflow source (see activation above)
 ```
 
-## Build
+Build output (56 HTML pages, sitemap.xml, robots.txt, ads.txt, CNAME, .nojekyll, 404.html) is generated during deploy and not committed.
+
+## Build locally
 
 ```bash
 node tools/build.mjs      # regenerates every page, sitemap, robots, ads.txt, CNAME
 ```
 
-Edit content in `tools/content/` and push to `main`. The Pages workflow runs the generator and deploys the output; generated HTML is not committed.
+Edit content in `tools/content/` and push to `main`. The Pages workflow runs the generator and deploys the output.
 
 ## Forms & contact routing
 
